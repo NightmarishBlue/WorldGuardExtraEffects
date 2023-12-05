@@ -19,7 +19,7 @@ public class PotionEffectFlag extends Flag<PotionEffect> {
     public PotionEffect parseInput(FlagContext context) throws InvalidFlagFormat {
         String[] split = context.getUserInput().trim().split(" ");
         if (split.length < 2 || split.length > 5) {
-            throw new InvalidFlagFormat("Please use the following format: <effect name> <duration in secs> [amplifier] [show particles] [is ambient]\nOptional values are assigned to 0 or false");
+            throw new InvalidFlagFormat("Please use the following format: <bukkit effect name> <duration in secs> [amplifier] [show particles] [is ambient]\nOptional values are assigned to 0 or false");
         }
 
         PotionEffectType potionEffect = PotionEffectType.getByName(split[0]);
