@@ -2,6 +2,7 @@ package blue.nightmarish.worldguardextraeffects;
 
 import blue.nightmarish.worldguardextraeffects.flags.Flags;
 import blue.nightmarish.worldguardextraeffects.handlers.GiveEffectsOnEntryFlagHandler;
+import blue.nightmarish.worldguardextraeffects.handlers.GiveEffectsOnExitFlagHandler;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -61,7 +62,7 @@ public final class WorldGuardExtraEffects extends JavaPlugin {
         this.sessionManager = this.worldGuard.getPlatform().getSessionManager();
         // register the event handlers
         this.sessionManager.registerHandler(GiveEffectsOnEntryFlagHandler.FACTORY(), null);
-
+        this.sessionManager.registerHandler(GiveEffectsOnExitFlagHandler.FACTORY(), null);
 //        this.getServer().getPluginManager().registerEvents(new PlayerListener());
     }
 

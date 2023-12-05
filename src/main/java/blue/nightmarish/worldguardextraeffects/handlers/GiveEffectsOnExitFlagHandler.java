@@ -17,25 +17,32 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GiveEffectsOnEntryFlagHandler extends Handler {
+public class GiveEffectsOnExitFlagHandler extends Handler {
     private Collection<Set<PotionEffect>> lastGivenEffects;
 
-    GiveEffectsOnEntryFlagHandler(Session session) {
+    GiveEffectsOnExitFlagHandler(Session session) {
         super(session);
         this.lastGivenEffects = new HashSet<>();
     }
 
     @Override
+    public void initialize(LocalPlayer player, Location currentPos, ApplicableRegionSet regions) {
+        // when initialised, add every effect from the region's defined effects for this flag to this object's field
+        // using a set, possibly not worth it
+        this.lastGivenEffects = regions.queryAllValues(player, Flags.GIVE_EFFECTS_ON_EXIT);
+    }
+
+    @Override
     public boolean onCrossBoundary(LocalPlayer player, Location from, Location to, ApplicableRegionSet regions, Set<ProtectedRegion> entered, Set<ProtectedRegion> exited, MoveType moveType) {
-        // incoming effects are checked against previous effects and then stored there for next time
-        Collection<Set<PotionEffect>> incomingEffects = regions.queryAllValues(player, Flags.GIVE_EFFECTS_ON_ENTRY);
+        // last effects are applied to the player and then set to incoming
+        Collection<Set<PotionEffect>> incomingEffects = regions.queryAllValues(player, Flags.GIVE_EFFECTS_ON_EXIT);
 
         if (!this.getSession().getManager().hasBypass(player, (World) to.getExtent())) {
             Player bukkitPlayer = ((BukkitPlayer) player).getPlayer();
-            // loop over and apply incoming effects
-            for (Set<PotionEffect> effects : incomingEffects) {
-                // shouldn't apply the effects if they've already been given to you
-                if (!this.lastGivenEffects.contains(effects)) bukkitPlayer.addPotionEffects(effects);
+            // loop over and apply previous last effects
+            for (Set<PotionEffect> effects : this.lastGivenEffects) {
+                // shouldn't apply the effects if they're about to be given to you
+                if (!incomingEffects.contains(effects)) bukkitPlayer.addPotionEffects(effects);
             }
         }
 
@@ -45,10 +52,10 @@ public class GiveEffectsOnEntryFlagHandler extends Handler {
 
 
     // factory boilerplate
-    public static class Factory extends Handler.Factory<GiveEffectsOnEntryFlagHandler> {
+    public static class Factory extends Handler.Factory<GiveEffectsOnExitFlagHandler> {
         @Override
-        public GiveEffectsOnEntryFlagHandler create(Session session) {
-            return new GiveEffectsOnEntryFlagHandler(session);
+        public GiveEffectsOnExitFlagHandler create(Session session) {
+            return new GiveEffectsOnExitFlagHandler(session);
         }
     }
 

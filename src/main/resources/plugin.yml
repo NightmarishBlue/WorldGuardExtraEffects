@@ -1,4 +1,4 @@
-name: WorldGuardExtraEffects
+name: '${pluginName}'
 version: '${version}'
 main: blue.nightmarish.worldguardextraeffects.WorldGuardExtraEffects
 api-version: '1.18'

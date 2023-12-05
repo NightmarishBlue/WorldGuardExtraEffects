@@ -1,4 +1,4 @@
-package blue.nightmarish.worldguardextraeffects.flags.helpers;
+package blue.nightmarish.worldguardextraeffects.flags.custom;
 
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.FlagContext;
@@ -37,7 +37,7 @@ public class PotionEffectFlag extends Flag<PotionEffect> {
         return this.buildPotionEffect(split);
     }
 
-    // functions that convert an effect to and from a string representation
+    // functions that converts an effect to and from a string representation
     @Override
     public Object marshal(PotionEffect effect) {
         return effect.getType().getName() + " " + effect.getDuration() + " " + effect.getAmplifier() + " " + effect.hasParticles() + " " + effect.isAmbient();

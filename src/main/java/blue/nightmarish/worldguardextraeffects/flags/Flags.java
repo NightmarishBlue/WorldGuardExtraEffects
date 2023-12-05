@@ -1,6 +1,6 @@
 package blue.nightmarish.worldguardextraeffects.flags;
 
-import blue.nightmarish.worldguardextraeffects.flags.helpers.PotionEffectFlag;
+import blue.nightmarish.worldguardextraeffects.flags.custom.PotionEffectFlag;
 import com.sk89q.worldguard.protection.flags.SetFlag;
 import org.bukkit.potion.PotionEffect;
 
